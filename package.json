@@ -1,0 +1,22 @@
+{
+  "name": "reactplay",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ManhQLe/ReactJS-Play.git"
+  },
+  "author": "Manh Le",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ManhQLe/ReactJS-Play/issues"
+  },
+  "homepage": "https://github.com/ManhQLe/ReactJS-Play#readme",
+  "dependencies": {
+    "express": "^4.15.4"
+  }
+}
