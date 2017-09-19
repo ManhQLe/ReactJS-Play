@@ -1,8 +1,8 @@
 class Button extends React.Component{
     state = {
         count : 0
-    }
-    click(){
+    }    
+    click= ()=>{
         this.setState({
             state: this.state.count++
         })
