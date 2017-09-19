@@ -1,0 +1,57 @@
+<html>
+
+<head>
+    <style type="text/css">
+        .board {
+            display: flex;
+            width: 900px;
+            height: 900px;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: flex-start
+        }
+
+        .square {
+            display: flex;
+            width: 300px;
+            height: 300px;
+            box-sizing: border-box;
+            border: 1px solid #F0F0F0;
+            justify-content: center;
+            align-content: center;
+            align-items: center;
+            font-size: 5em;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.25.0/babel.min.js"></script>    
+    <script src="https://fb.me/react-0.14.3.min.js"></script>
+    <script src="https://fb.me/react-dom-0.14.3.min.js"></script>
+    <script src="React01.js" type="text/babel"></script>
+</head>
+
+<body>
+    <div id="DOM"></div>
+   
+    <script>
+        var GameState = {
+            Symbols:["X","O"],
+            Turn:0,
+            Board:["","","","","","","","",""]
+        }
+
+        function Render(State){
+            var X = [];
+            X.push("<div class='board'>");
+            State.Board.forEach(function(element) {
+                X.push("<div class='square'>",element,"</div>");
+            }, this);
+            X.push("<div>");
+            return X.join("");
+        }
+        
+       
+    </script>
+
+</body>
+
+</html>
