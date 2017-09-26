@@ -1,4 +1,31 @@
+body{
+    font-family: Verdana, Geneva, Tahoma, sans-serif
+}
+
 .fa-star{
-    font-size: 13pt;
-    margin-right:5px;
+    font-size: 20pt;
+    margin-right:15px;
+}
+
+.NUMBERS> span{
+    display: inline-block;
+    margin:.3em;
+    text-align: center;
+    background-color: #ccc;
+    line-height: 24px;
+    width:24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.NUMBERS >span[data-status='used']{
+    background-color: #eee;
+    color:#ddd;
+    cursor:not-allowed;
+}
+
+.NUMBERS >span[data-status='selected']{
+    background-color: #aaff00;
+    color: #99bb99;    
 }

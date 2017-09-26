@@ -1,10 +1,12 @@
 
-const Stars = (props)=>{
+const Stars = (props)=>{    
+    let stars = [];
+    for(let i = 0;i<props.NOS;i++)
+        stars.push(<i className="fa fa-star"></i>);
+
     return (
         <div>
-            <i className="fa fa-star"></i>
-            <i className="fa fa-star"></i>
-            <i className="fa fa-star"></i>
+            {stars}
         </div>
     )
 }
@@ -19,44 +21,71 @@ const Button = (props)=>{
 
 const Answer = (props)=>{
     return (
-        <div>
-            Answer
+        <div className="NUMBERS">
+        {
+            props.selected.map((x) =>{
+                return <span>{x}</span>
+            })
+        }
         </div>
     )
 }
 
 const Numbers = (props)=>{
+
+    const CheckStatus=(x)=>{
+        return props.selected.indexOf(x) >=0 ?'used':''
+    }
+
     return(
-        <div className=''>
-            <span>1</span>
-            <span>2</span>
-            <span>3</span>
-            <span>4</span>
-            <span>5</span>
-            <span>6</span>
-            <span>7</span>
-            <span>8</span>
-            <span>9</span>
-            <span>10</span>
-            
+        <div className='NUMBERS'>
+            {
+                Numbers.List.map(x=>{
+                    return <span onClick={()=>props.selectevent(x)} data-status={CheckStatus(x)}>{x}</span>
+                })
+            }
         </div>
     )
 
 }
 
+Numbers.List = [];
+for(let i = 1;i<10;i++){
+    Numbers.List.push(i);
+}
+
 class Game extends React.Component{
+    state={
+        selectedNumbers: [2,3],
+        NoOfStars:1+Math.floor(Math.random()*9)
+    }        
+
+    ClickedEvent=(event)=>{
+       
+    }
+
+    SelectNumber=(n)=>{
+        let X = this.state.selectedNumbers;
+        if(X.indexOf(n)<0){
+            X.push(n);
+            this.setState({
+                selectedNumbers: X
+            })
+        }
+    }
+
     render(){
         return (
             <div>
                 <h3>Play Nine</h3>
                 <hr/>
                 <div style={{display:'flex'}}>
-                    <Stars/>
-                    <Button/>
-                    <Answer/>
+                    <Stars NOS={this.state.NoOfStars}/>
+                    <Button clickevent={this.ClickedEvent}/>
+                    <Answer selected={this.state.selectedNumbers}/>
                 </div>
                 <br/>
-                <Numbers/>    
+                <Numbers selectevent={this.SelectNumber} selected={this.state.selectedNumbers}/>    
             </div>
         )
     }
