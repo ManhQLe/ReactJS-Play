@@ -12,9 +12,27 @@ const Stars = (props)=>{
 }
 
 const Button = (props)=>{
+    let button;
+    switch(props.IsCorrect){
+        case true:
+        button = <button>
+            <i className="fa fa-check"></i>
+        </button>
+        break;
+        case false:
+        button = <button>
+        <i className="fa fa-times"></i>
+        </button>
+        break;
+        default:
+        button = <button onClick={props.CheckAnswer} disabled={props.selectednumbers.length ==0}>=</button>
+        break;        
+
+    }
+
     return (
         <div>
-            <button>=</button>
+            {button}
         </div>
     )
 }
@@ -24,7 +42,7 @@ const Answer = (props)=>{
         <div className="NUMBERS">
         {
             props.selected.map((x) =>{
-                return <span>{x}</span>
+                return <span onClick={()=>{props.selectevent(x,false)}}>{x}</span>
             })
         }
         </div>
@@ -36,7 +54,7 @@ const Numbers = (props)=>{
     const CheckStatus=(x)=>{
         return props.selected.indexOf(x) >=0 ?'used':''
     }
-
+    console.log("NumberRender")
     return(
         <div className='NUMBERS'>
             {
@@ -56,36 +74,50 @@ for(let i = 1;i<10;i++){
 
 class Game extends React.Component{
     state={
-        selectedNumbers: [2,3],
-        NoOfStars:1+Math.floor(Math.random()*9)
+        selectedNumbers: [],
+        NoOfStars:1+Math.floor(Math.random()*9),
+        IsAnwserCorect:null
     }        
 
     ClickedEvent=(event)=>{
        
     }
-
-    SelectNumber=(n)=>{
+    checkAnswer =()=>{
+        this.setState(curr =>(
+            {IsAnwserCorect : curr.selectedNumbers.reduce((a,b)=>a+b,0) == curr.NoOfStars}
+        ));
+    }
+    SelectNumber=(n,y)=>{
+        y = y===undefined?true:false;
         let X = this.state.selectedNumbers;
-        if(X.indexOf(n)<0){
-            X.push(n);
-            this.setState({
-                selectedNumbers: X
-            })
+        let idx = X.indexOf(n);
+        if(y){
+            if(idx<0)
+                X.push(n);
         }
+        else
+            if(idx>=0)
+            X.splice(X.indexOf(n),1);
+
+        this.setState({
+            selectedNumbers: X
+        })
     }
 
     render(){
+        let {selectedNumbers, NoOfStars,IsAnwserCorect } = this.state;
+
         return (
             <div>
                 <h3>Play Nine</h3>
                 <hr/>
                 <div style={{display:'flex'}}>
-                    <Stars NOS={this.state.NoOfStars}/>
-                    <Button clickevent={this.ClickedEvent}/>
-                    <Answer selected={this.state.selectedNumbers}/>
+                    <Stars NOS={NoOfStars}/>
+                    <Button IsCorrect={IsAnwserCorect} CheckAnswer={this.checkAnswer} selectednumbers={selectedNumbers} clickevent={this.ClickedEvent}/>
+                    <Answer  selectevent={this.SelectNumber}  selected={selectedNumbers}/>
                 </div>
                 <br/>
-                <Numbers selectevent={this.SelectNumber} selected={this.state.selectedNumbers}/>    
+                <Numbers selectevent={this.SelectNumber} selected={selectedNumbers}/>    
             </div>
         )
     }
