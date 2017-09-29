@@ -16,7 +16,7 @@ const Button = (props)=>{
     switch(props.IsCorrect){
         case true:
         button = <button>
-            <i className="fa fa-check"></i>
+            <i className="fa fa-check" onClick={props.acceptevent}></i>
         </button>
         break;
         case false:
@@ -52,9 +52,11 @@ const Answer = (props)=>{
 const Numbers = (props)=>{
 
     const CheckStatus=(x)=>{
-        return props.selected.indexOf(x) >=0 ?'used':''
+        if(props.usedNumbers.indexOf(x)>=0)
+            return "selected"
+        return props.selected.indexOf(x) >=0 ?'select':''
     }
-    console.log("NumberRender")
+    
     return(
         <div className='NUMBERS'>
             {
@@ -76,7 +78,8 @@ class Game extends React.Component{
     state={
         selectedNumbers: [],
         NoOfStars:1+Math.floor(Math.random()*9),
-        IsAnwserCorect:null
+        IsAnwserCorect:null,
+        usedNumbers:[]
     }        
 
     ClickedEvent=(event)=>{
@@ -100,12 +103,22 @@ class Game extends React.Component{
             X.splice(X.indexOf(n),1);
 
         this.setState({
+            IsAnwserCorect:null,
             selectedNumbers: X
         })
     }
 
+    acceptAnswer = ()=>{
+        this.setState(curr=>({            
+            usedNumbers:curr.usedNumbers.concat(curr.selectedNumbers),
+            selectedNumbers:[],
+            IsAnwserCorect:null,
+            NoOfStars:1+Math.floor(Math.random()*9)
+        }));
+    }
+
     render(){
-        let {selectedNumbers, NoOfStars,IsAnwserCorect } = this.state;
+        let {selectedNumbers, NoOfStars,IsAnwserCorect,usedNumbers } = this.state;
 
         return (
             <div>
@@ -113,11 +126,11 @@ class Game extends React.Component{
                 <hr/>
                 <div style={{display:'flex'}}>
                     <Stars NOS={NoOfStars}/>
-                    <Button IsCorrect={IsAnwserCorect} CheckAnswer={this.checkAnswer} selectednumbers={selectedNumbers} clickevent={this.ClickedEvent}/>
-                    <Answer  selectevent={this.SelectNumber}  selected={selectedNumbers}/>
+                    <Button IsCorrect={IsAnwserCorect} CheckAnswer={this.checkAnswer} selectednumbers={selectedNumbers} acceptevent={this.acceptAnswer} clickevent={this.ClickedEvent}/>
+                    <Answer selectevent={this.SelectNumber}  selected={selectedNumbers}/>
                 </div>
                 <br/>
-                <Numbers selectevent={this.SelectNumber} selected={selectedNumbers}/>    
+                <Numbers usedNumbers={usedNumbers} selectevent={this.SelectNumber} selected={selectedNumbers}/>    
             </div>
         )
     }

@@ -28,4 +28,5 @@ body{
 .NUMBERS >span[data-status='selected']{
     background-color: #aaff00;
     color: #99bb99;    
+    pointer-events:none;
 }
