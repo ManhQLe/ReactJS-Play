@@ -33,6 +33,11 @@ const Button = (props)=>{
     return (
         <div>
             {button}
+            <br/>
+            <br/>
+            <button onClick={props.redraw} disabled={props.redraws<=0}>
+                <i className="fa fa-refresh"></i> {props.redraws}
+            </button>
         </div>
     )
 }
@@ -79,8 +84,18 @@ class Game extends React.Component{
         selectedNumbers: [],
         NoOfStars:1+Math.floor(Math.random()*9),
         IsAnwserCorect:null,
-        usedNumbers:[]
+        usedNumbers:[],
+        redraws:5
     }        
+
+    redraw=()=>{
+        this.setState(curr=>({
+            NoOfStars:1+Math.floor(Math.random()*9),
+            IsAnwserCorect:null,
+            selectedNumbers:[],
+            redraws:curr.redraws-1
+        }))
+    }
 
     ClickedEvent=(event)=>{
        
@@ -108,6 +123,12 @@ class Game extends React.Component{
         })
     }
 
+    updateDone = ()=>{
+        this.setState(cur =>({
+            
+        }));
+    }
+
     acceptAnswer = ()=>{
         this.setState(curr=>({            
             usedNumbers:curr.usedNumbers.concat(curr.selectedNumbers),
@@ -118,7 +139,7 @@ class Game extends React.Component{
     }
 
     render(){
-        let {selectedNumbers, NoOfStars,IsAnwserCorect,usedNumbers } = this.state;
+        let {selectedNumbers, NoOfStars,IsAnwserCorect,usedNumbers,redraws } = this.state;
 
         return (
             <div>
@@ -126,7 +147,7 @@ class Game extends React.Component{
                 <hr/>
                 <div style={{display:'flex'}}>
                     <Stars NOS={NoOfStars}/>
-                    <Button IsCorrect={IsAnwserCorect} CheckAnswer={this.checkAnswer} selectednumbers={selectedNumbers} acceptevent={this.acceptAnswer} clickevent={this.ClickedEvent}/>
+                    <Button redraws={redraws} redraw={this.redraw} IsCorrect={IsAnwserCorect} CheckAnswer={this.checkAnswer} selectednumbers={selectedNumbers} acceptevent={this.acceptAnswer} clickevent={this.ClickedEvent}/>
                     <Answer selectevent={this.SelectNumber}  selected={selectedNumbers}/>
                 </div>
                 <br/>
