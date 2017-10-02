@@ -1,0 +1,31 @@
+.BOARD{
+    font-size: 24pt;
+    display: inline-flex;
+    flex-direction: column;
+    border: 1px solid#3498db;
+    cursor: default;
+}
+
+.BOARD > .ROW{
+    display: flex;
+    flex-direction:row
+}
+
+.BOARD > .ROW > div{
+    box-sizing: border-box;    
+    display:inline-block;
+    line-height: 2em;
+    width: 2em;
+    height: 2em;
+    text-align:center;
+    vertical-align: middle;   
+    transition: background-color .1s ease-in-out; 
+}
+
+.BOARD > .ROW > div:hover{
+    background-color: #f1c40f
+}
+
+.BOARD>.ROW>div[data-selected='true']{
+    background-color: #f1c40f
+}
